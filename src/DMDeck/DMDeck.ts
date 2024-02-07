@@ -1,6 +1,6 @@
 import { LitElement, css, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
-import { DMDeckController } from "./dmDeckController";
+import { DMDeckController } from "../dmDeckController";
 import { getDMCardThumbnailUrl } from "./helpers";
 import "./loading";
 
