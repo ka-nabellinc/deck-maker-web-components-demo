@@ -1,7 +1,7 @@
-import { LitElement, css, html } from "lit";
+import { LitElement, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import "./loading";
-
+import '../loading'
+import { styleBase } from './styles'
 export type Tab = "main" | "gr" | "hyperSpatial" | "dorumagedon" | "zeron"
 
 @customElement("dm-tabs")
@@ -94,47 +94,7 @@ export class DMTabs extends LitElement {
     `;
   }
 
-  static styles = css`
-    .tabs {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-    }
-
-    .tab {
-      flex: 1;
-      border-right: solid 0.5px #dee2e6;
-      border-top: solid 1px #dee2e6;
-      border-bottom: solid 1px #dee2e6;
-      border-left: solid 0.5px #dee2e6;
-      height: 30px;
-      text-align: center;
-      line-height: 30px;
-      font-size: 12px;
-      cursor: pointer;
-      transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-        border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    }
-
-    .tab:first-child {
-      border-left: solid 1px #dee2e6;
-    }
-
-    .tab:last-child {
-      border-right: solid 1px #dee2e6;
-    }
-
-    .tab.active {
-      color: #fff;
-      background-color: #343a40;
-      border: none;
-    }
-
-    .tab:hover {
-      color: #fff;
-      background-color: #343a40;
-    }
-  `;
+  static styles = [styleBase]
 }
 
 declare global {

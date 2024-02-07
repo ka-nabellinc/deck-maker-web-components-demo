@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/web-components";
 import { action } from "@storybook/addon-actions";
 import { html } from "lit";
-// import type { ButtonProps } from './Button';
-import { type Tab } from "./dmTabs";
-import "./dmTabs";
+import type { Tab } from './DMTabs'
+import "./DMTabs"
 
 interface Params {
   currentTab: Tab;
@@ -33,51 +32,59 @@ const template = ({
   ></dm-tabs>
 `;
 
-// More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 const meta = {
   title: "dm-tabs",
   tags: ["autodocs"],
   render: template,
+  args: {
+    mainCardsLengh: 40,
+    grCardsLengh: 12,
+    hyperSpatialCardsLengh: 8,
+  },
   argTypes: {
-    currentTab: { type: "string" },
-    // backgroundColor: { control: 'color' },
-    // onClick: { action: 'onClick' },
-    // size: {
-    //   control: { type: 'select' },
-    //   options: ['small', 'medium', 'large'],
-    // },
+    currentTab: {
+      control: { type: 'select' },
+      options: ["main", "gr", "hyperSpatial", "dorumagedon", "zeron"],
+    },
+    mainCardsLengh: { control: { type: 'number' } },
+    grCardsLengh: { control: { type: 'number' } },
+    hyperSpatialCardsLengh: { control: { type: 'number' } },
+    hasDorumagedon: { control: 'boolean' },
+    hasZeron: { control: 'boolean' }
   },
 } satisfies Meta<Params>;
 
 export default meta;
 type Story = StoryObj<Params>;
 
-// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Main: Story = {
   args: {
     currentTab: "main",
-    mainCardsLengh: 40,
-    grCardsLengh: 12,
-    hyperSpatialCardsLengh: 8,
   },
 };
 
-// export const Secondary: Story = {
-//   args: {
-//     label: 'Button',
-//   },
-// };
+export const GR: Story = {
+  args: {
+    currentTab: "gr",
+  },
+};
 
-// export const Large: Story = {
-//   args: {
-//     size: 'large',
-//     label: 'Button',
-//   },
-// };
+export const HyperSpatial: Story = {
+  args: {
+    currentTab: 'hyperSpatial',
+  },
+};
 
-// export const Small: Story = {
-//   args: {
-//     size: 'small',
-//     label: 'Button',
-//   },
-// };
+export const Dorumagedon: Story = {
+  args: {
+    currentTab: 'dorumagedon',
+    hasDorumagedon: true
+  },
+};
+
+export const Zeron: Story = {
+  args: {
+    currentTab: 'zeron',
+    hasZeron: true
+  },
+};
