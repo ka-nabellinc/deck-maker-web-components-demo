@@ -29,9 +29,6 @@ export interface DMDeckData {
   regulation_type: "advance" | "original" | "2block" | 'party' | "none" | null;
   dm_deck_type_id: string;
   legend: boolean;
-  main_sort_mode: 'byCost' | 'byCivilization' | 'byNum' | 'bySubType' | 'byManual';
-  gr_sort_mode: 'byCost' | 'byCivilization' | 'byNum' | 'bySubType' | 'byManual';
-  hyper_spatial_sort_mode: 'byCost' | 'byCivilization' | 'byNum' | 'bySubType' | 'byManual';
   zeron: boolean;
   dorumagedon: boolean;
   has_fire: boolean;
