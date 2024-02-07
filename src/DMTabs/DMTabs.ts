@@ -1,54 +1,52 @@
 import { LitElement, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import '../loading'
-import { styleBase } from './styles'
-export type Tab = "main" | "gr" | "hyperSpatial" | "dorumagedon" | "zeron"
+import "../loading";
+import { styleBase } from "./styles";
+
+export type Tab = "main" | "gr" | "hyperSpatial" | "dorumagedon" | "zeron";
 
 @customElement("dm-tabs")
 export class DMTabs extends LitElement {
-
   @property({ type: String })
-  currentTab: string  = "main";
+  currentTab: string = "main";
 
   @property({ type: Number })
-  mainCardsLengh: number = 0
+  mainCardsLengh: number = 0;
 
   @property({ type: Number })
-  grCardsLengh: number = 0
+  grCardsLengh: number = 0;
 
   @property({ type: Number })
-  hyperSpatialCardsLengh: number = 0
+  hyperSpatialCardsLengh: number = 0;
 
   @property({ type: Boolean })
-  hasDorumagedon: boolean = false
+  hasDorumagedon: boolean = false;
 
   @property({ type: Boolean })
-  hasZeron: boolean = false
+  hasZeron: boolean = false;
 
   changeTab(e: Event) {
     const target = e.target as HTMLElement;
     const tab = target.dataset["tab"] as Tab;
 
     if (this.currentTab === tab) return;
-    this.dispatchEvent(new CustomEvent('change', { detail: tab }))
+    this.dispatchEvent(new CustomEvent("change", { detail: tab }));
   }
+
+  static styles = [styleBase];
 
   render() {
     return html`
       <div class="tabs">
         <div
-          class="tab ${this.currentTab === "main"
-            ? "active"
-            : undefined}"
+          class="tab ${this.currentTab === "main" ? "active" : undefined}"
           @click="${this.changeTab}"
           data-tab="main"
         >
           メイン${this.mainCardsLengh}
         </div>
         <div
-          class="tab ${this.currentTab === "gr"
-            ? "active"
-            : undefined}"
+          class="tab ${this.currentTab === "gr" ? "active" : undefined}"
           @click="${this.changeTab}"
           data-tab="gr"
         >
@@ -93,8 +91,6 @@ export class DMTabs extends LitElement {
       </div>
     `;
   }
-
-  static styles = [styleBase]
 }
 
 declare global {
