@@ -11,3 +11,11 @@ export const getDMCardThumbnailUrl = (
     return ''; // FIXME
   }
 };
+
+export const isMobile = () => {
+  if (navigator.userAgent.match(/iPhone|Android.+Mobile/)) {
+    return true;
+  } else {
+    return false;
+  }
+}
