@@ -1,8 +1,10 @@
 import { LitElement, css, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { DMDeckController } from "../dmDeckController";
-import { getDMCardThumbnailUrl } from "./helpers";
-import "./loading";
+import { getDMCardThumbnailUrl } from "../helpers";
+import "../DMTabs";
+import "../DMDeckArea";
+import { Tab } from "../DMTabs";
 
 @customElement("dm-deck")
 export class DMDeck extends LitElement {
@@ -12,12 +14,8 @@ export class DMDeck extends LitElement {
   private dmDeckId?: string;
 
   @state()
-  currentTab: "main" | "gr" | "hyperSpatial" | "dorumagedon" | "zeron" = "main";
-
-  // connectedCallback() {
-  //   super.connectedCallback()
-  //   this.fetchDeckData()
-  // }
+  private currentTab: "main" | "gr" | "hyperSpatial" | "dorumagedon" | "zeron" =
+    "main";
 
   updated(changedProperties: Map<PropertyKey, unknown>) {
     super.updated(changedProperties);
@@ -33,27 +31,24 @@ export class DMDeck extends LitElement {
     }
   }
 
-  changeTab(e: Event) {
-    const target = e.target as HTMLElement;
-    const tab = target.dataset["tab"] as
-      | "main"
-      | "gr"
-      | "hyperSpatial"
-      | "dorumagedon"
-      | "zeron";
-
-    if (this.currentTab === tab) return;
-    const currentTab = this.currentTab;
-    this.currentTab = tab;
-    // this.requestUpdate('currentTab', currentTab) // FIXME:　必要?
+  changeTab(e: CustomEvent<Tab>) {
+    this.currentTab = e.detail;
   }
 
-  isMobile(){
-    if (navigator.userAgent.match(/iPhone|Android.+Mobile/)) {
-      return true;
-    } else {
-      return false;
-    }
+  showCardDetailModal(cardImg: string | null) {
+    const _this = this;
+    return function (e: Event) {
+      // if (cardImg === dorumagedon_l || cardImg === zeron_l || cardImg === dorumagedon_secret_l || cardImg === zeron_secret_l || cardImg === dorumagedon_BD21_l || cardImg === zeron_BD22_l) {
+      //   _this.cardDetailImg = cardImg!
+      // } else {
+      //   _this.cardDetailImg = getDMCardThumbnailUrl(cardImg);
+      // }
+      if (!_this.shadowRoot) return;
+      const element = _this.shadowRoot.getElementById("cardDetailModalArea");
+      if (!element) return;
+      element.classList.toggle("show");
+      element.classList.toggle("hide");
+    };
   }
 
   render() {
@@ -84,162 +79,47 @@ export class DMDeck extends LitElement {
                   </div>
                 </div>
 
-                <div class="tabs">
-                  <div
-                    class="tab ${this.currentTab === "main"
-                      ? "active"
-                      : undefined}"
-                    @click="${this.changeTab}"
-                    data-tab="main"
-                  >
-                    メイン${this.deckController.dmDeckData.main_cards.length}
-                  </div>
-                  <div
-                    class="tab ${this.currentTab === "gr"
-                      ? "active"
-                      : undefined}"
-                    @click="${this.changeTab}"
-                    data-tab="gr"
-                  >
-                    GR${this.deckController.dmDeckData.gr_cards.length}
-                  </div>
-                  <div
-                    class="tab ${this.currentTab === "hyperSpatial"
-                      ? "active"
-                      : undefined}"
-                    @click="${this.changeTab}"
-                    data-tab="hyperSpatial"
-                  >
-                    超次元${this.deckController.dmDeckData.hyper_spatial_cards
-                      .length}
-                  </div>
-                  ${this.deckController.dmDeckData.dorumagedon
-                    ? html`
-                        <div
-                          class="tab ${this.currentTab === "dorumagedon"
-                            ? "active"
-                            : undefined}"
-                          @click="${this.changeTab}"
-                          data-tab="dorumagedon"
-                          style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"
-                        >
-                          ドルマゲドン
-                        </div>
-                      `
-                    : null}
-                  ${this.deckController.dmDeckData.zeron
-                    ? html`
-                        <div
-                          class="tab ${this.currentTab === "zeron"
-                            ? "active"
-                            : undefined}"
-                          @click="${this.changeTab}"
-                          data-tab="zeron"
-                        >
-                          零龍
-                        </div>
-                      `
-                    : null}
-                </div>
+                <dm-tabs
+                  currentTab=${this.currentTab}
+                  mainCardsLengh=${this.deckController.dmDeckData.main_cards
+                    .length}
+                  grCardsLengh=${this.deckController.dmDeckData.gr_cards.length}
+                  hyperSpatialCardsLengh=${this.deckController.dmDeckData
+                    .hyper_spatial_cards.length}
+                  ?hasDorumagedon=${this.deckController.dmDeckData.dorumagedon}
+                  ?hasZeron=${this.deckController.dmDeckData.zeron}
+                  @change=${this.changeTab}
+                ></dm-tabs>
 
                 <div class="deckAreaWrapper">
                   ${this.currentTab === "main"
                     ? html`
-                        <div class="deckArea main">
-                          ${this.deckController.dmDeckData.main_cards.map(
-                            (card) => html`
-                              <div
-                                class="${this.isMobile()
-                                  ? "cardWrapperMobile"
-                                  : "cardWrapper"}"
-                                @click="${this.showCardDetailModal(
-                                  card.large_image_url
-                                )}"
-                              >
-                                <img
-                                  src="${getDMCardThumbnailUrl(
-                                    card.thumbnail_url,
-                                    "s"
-                                  )}"
-                                  class="cardImage"
-                                />
-                              </div>
-                            `
-                          )}
-                        </div>
+                        <dm-deck-area
+                          .cards=${this.deckController.dmDeckData.main_cards}
+                          @selectImage=${this.showCardDetailModal}
+                        >
+                        </dm-deck-area>
                       `
                     : this.currentTab === "gr"
                     ? html`
-                        <div class="deckArea gr">
-                          ${this.deckController.dmDeckData.gr_cards.map(
-                            (card) => html`
-                              <div
-                                class="${this.isMobile()
-                                  ? "cardWrapperMobile"
-                                  : "cardWrapper"}"
-                                @click="${this.showCardDetailModal(
-                                  card.large_image_url
-                                )}"
-                              >
-                                <img
-                                  src="${getDMCardThumbnailUrl(
-                                    card.thumbnail_url,
-                                    "s"
-                                  )}"
-                                  class="cardImage"
-                                />
-                              </div>
-                            `
-                          )}
+                        <dm-deck-area
+                          .cards=${this.deckController.dmDeckData.gr_cards}
+                          @selectImage=${this.showCardDetailModal}>
+                        </dm-deck-area>
                         </div>
                       `
                     : this.currentTab === "hyperSpatial"
                     ? html`
-                        <div class="deckArea hyperSpatial">
-                          ${this.deckController.dmDeckData.hyper_spatial_cards.map(
-                            (card) => html`
-                              <div
-                                class="${this.isMobile()
-                                  ? "cardWrapperMobile"
-                                  : "cardWrapper"}"
-                                @click="${this.showCardDetailModal(
-                                  card.large_image_url
-                                )}"
-                              >
-                                <img
-                                  src="${getDMCardThumbnailUrl(
-                                    card.thumbnail_url,
-                                    "s"
-                                  )}"
-                                  class="cardImage"
-                                />
-                              </div>
-                            `
-                          )}
+                        <dm-deck-area
+                          .cards=${this.deckController.dmDeckData.hyper_spatial_cards}
+                          @selectImage=${this.showCardDetailModal}>
+                        </dm-deck-area>
                         </div>
                       `
                     : this.currentTab === "dorumagedon"
-                    ? html`
-                        <div class="dorumageArea">
-                          <div
-                            class="dorumageWrapper"
-                            @click="${this.showCardDetailModal(dorumagedon)}"
-                          >
-                            <img src="${dorumagedon}" class="cardImage" />
-                          </div>
-                        </div>
-                      `
+                    ? null
                     : this.currentTab === "zeron"
-                    ? html`
-                        <div class="zeronArea">
-                          <div
-                            class="zeronWrapper"
-                            @click="${this.showCardDetailModal(zeron)}"
-                          >
-                            <img src="${zeron}" class="cardImage" />
-                          </div>
-                        </div>
-                      `
+                    ? null
                     : null}
                 </div>
               </div>
@@ -337,46 +217,6 @@ export class DMDeck extends LitElement {
       text-overflow: ellipsis;
     }
 
-    .tabs {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-    }
-
-    .tab {
-      flex: 1;
-      border-right: solid 0.5px #dee2e6;
-      border-top: solid 1px #dee2e6;
-      border-bottom: solid 1px #dee2e6;
-      border-left: solid 0.5px #dee2e6;
-      height: 30px;
-      text-align: center;
-      line-height: 30px;
-      font-size: 12px;
-      cursor: pointer;
-      transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-        border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    }
-
-    .tab:first-child {
-      border-left: solid 1px #dee2e6;
-    }
-
-    .tab:last-child {
-      border-right: solid 1px #dee2e6;
-    }
-
-    .tab.active {
-      color: #fff;
-      background-color: #343a40;
-      border: none;
-    }
-
-    .tab:hover {
-      color: #fff;
-      background-color: #343a40;
-    }
-
     .deckAreaWrapper {
       height: calc(650px - 241px);
       margin: 8px 0px;
@@ -386,27 +226,6 @@ export class DMDeck extends LitElement {
 
     .deckAreaWrapper::-webkit-scrollbar {
       display: none;
-    }
-
-    .deckArea {
-      display: flex;
-      flex-wrap: wrap;
-      align-content: flex-start;
-      line-height: 0;
-    }
-
-    .cardWrapper {
-      width: calc(100% / 8);
-      height: 100%;
-      padding: 0.5px;
-      cursor: pointer;
-    }
-
-    .cardWrapperMobile {
-      width: calc(100% / 6);
-      height: 100%;
-      padding: 0.5px;
-      cursor: pointer;
     }
 
     .dorumageArea,
@@ -420,10 +239,6 @@ export class DMDeck extends LitElement {
     .zeronWrapper {
       width: 60%;
       cursor: pointer;
-    }
-
-    .cardImage {
-      width: 100%;
     }
 
     .views {
