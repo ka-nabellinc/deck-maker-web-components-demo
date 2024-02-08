@@ -6,26 +6,26 @@ import "./DMTabs"
 
 interface Params {
   currentTab: Tab;
-  mainCardsLengh: number;
-  grCardsLengh: number;
-  hyperSpatialCardsLengh: number;
+  mainCardsLength: number;
+  grCardsLength: number;
+  hyperSpatialCardsLength: number;
   hasDorumagedon: boolean;
   hasZeron: boolean;
 }
 
 const template = ({
   currentTab,
-  mainCardsLengh,
-  grCardsLengh,
-  hyperSpatialCardsLengh,
+  mainCardsLength,
+  grCardsLength,
+  hyperSpatialCardsLength,
   hasDorumagedon,
   hasZeron,
 }: Params) => html`
   <dm-tabs
     currentTab=${currentTab}
-    mainCardsLengh=${mainCardsLengh}
-    grCardsLengh=${grCardsLengh}
-    hyperSpatialCardsLengh=${hyperSpatialCardsLengh}
+    mainCardsLength=${mainCardsLength}
+    grCardsLength=${grCardsLength}
+    hyperSpatialCardsLength=${hyperSpatialCardsLength}
     ?hasDorumagedon=${hasDorumagedon}
     ?hasZeron=${hasZeron}
     @change=${action('onChange')}
@@ -37,18 +37,18 @@ const meta = {
   tags: ["autodocs"],
   render: template,
   args: {
-    mainCardsLengh: 40,
-    grCardsLengh: 12,
-    hyperSpatialCardsLengh: 8,
+    mainCardsLength: 40,
+    grCardsLength: 12,
+    hyperSpatialCardsLength: 8,
   },
   argTypes: {
     currentTab: {
       control: { type: 'select' },
       options: ["main", "gr", "hyperSpatial", "dorumagedon", "zeron"],
     },
-    mainCardsLengh: { control: { type: 'number' } },
-    grCardsLengh: { control: { type: 'number' } },
-    hyperSpatialCardsLengh: { control: { type: 'number' } },
+    mainCardsLength: { control: { type: 'number' } },
+    grCardsLength: { control: { type: 'number' } },
+    hyperSpatialCardsLength: { control: { type: 'number' } },
     hasDorumagedon: { control: 'boolean' },
     hasZeron: { control: 'boolean' }
   },

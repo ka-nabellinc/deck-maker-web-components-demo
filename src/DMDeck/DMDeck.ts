@@ -5,13 +5,16 @@ import { getDMCardThumbnailUrl } from "../helpers";
 import "../DMTabs";
 import "../DMDeckArea";
 import { Tab } from "../DMTabs";
+import dorumagedon from "../static/images/dm/l/dorumagedon.jpg";
+import zeron from "../static/images/dm/l/zeron.jpg";
+import viewsSvg from "../static/svg/views.svg";
 
 @customElement("dm-deck")
 export class DMDeck extends LitElement {
   private deckController?: DMDeckController;
 
   @property({ type: String })
-  private dmDeckId?: string;
+  dmDeckId?: string;
 
   @state()
   private currentTab: "main" | "gr" | "hyperSpatial" | "dorumagedon" | "zeron" =
@@ -81,13 +84,12 @@ export class DMDeck extends LitElement {
 
                 <dm-tabs
                   currentTab=${this.currentTab}
-                  mainCardsLengh=${this.deckController.dmDeckData.main_cards
-                    .length}
-                  grCardsLengh=${this.deckController.dmDeckData.gr_cards.length}
-                  hyperSpatialCardsLengh=${this.deckController.dmDeckData
-                    .hyper_spatial_cards.length}
-                  ?hasDorumagedon=${this.deckController.dmDeckData.dorumagedon}
-                  ?hasZeron=${this.deckController.dmDeckData.zeron}
+                  mainCardsLength=${this.deckController.mainCardsLength}
+                  grCardsLength=${this.deckController.grCardsLength}
+                  hyperSpatialCardsLength=${this.deckController
+                    .hyperSpatialCardsLength}
+                  ?hasDorumagedon=${this.deckController.hasDorumagedon}
+                  ?hasZeron=${this.deckController.hasZeron}
                   @change=${this.changeTab}
                 ></dm-tabs>
 
@@ -95,7 +97,7 @@ export class DMDeck extends LitElement {
                   ${this.currentTab === "main"
                     ? html`
                         <dm-deck-area
-                          .cards=${this.deckController.dmDeckData.main_cards}
+                          .cards=${this.deckController.mainCards}
                           @selectImage=${this.showCardDetailModal}
                         >
                         </dm-deck-area>
@@ -103,24 +105,47 @@ export class DMDeck extends LitElement {
                     : this.currentTab === "gr"
                     ? html`
                         <dm-deck-area
-                          .cards=${this.deckController.dmDeckData.gr_cards}
-                          @selectImage=${this.showCardDetailModal}>
+                          .cards=${this.deckController.grCards}
+                          @selectImage=${this.showCardDetailModal}
+                        >
                         </dm-deck-area>
-                        </div>
                       `
                     : this.currentTab === "hyperSpatial"
                     ? html`
                         <dm-deck-area
-                          .cards=${this.deckController.dmDeckData.hyper_spatial_cards}
-                          @selectImage=${this.showCardDetailModal}>
+                          .cards=${this.deckController.hyperSpatialCards}
+                          @selectImage=${this.showCardDetailModal}
+                        >
                         </dm-deck-area>
-                        </div>
                       `
                     : this.currentTab === "dorumagedon"
-                    ? null
+                    ? html`
+                        <div class="dorumageArea">
+                          <div
+                            class="dorumageWrapper"
+                            @click="${this.showCardDetailModal(dorumagedon)}"
+                          >
+                            <img src="${dorumagedon}" class="cardImage" />
+                          </div>
+                        </div>
+                      `
                     : this.currentTab === "zeron"
-                    ? null
+                    ? html`
+                        <div class="zeronArea">
+                          <div
+                            class="zeronWrapper"
+                            @click="${this.showCardDetailModal(zeron)}"
+                          >
+                            <img src="${zeron}" class="cardImage" />
+                          </div>
+                        </div>
+                      `
                     : null}
+                </div>
+
+                <div class="views">
+                  <img class="viewsIcon" src=${viewsSvg} />
+                  <div>${this.deckController.views}</div>
                 </div>
               </div>
             `
@@ -218,10 +243,7 @@ export class DMDeck extends LitElement {
     }
 
     .deckAreaWrapper {
-      height: calc(650px - 241px);
       margin: 8px 0px;
-      overflow-y: scroll;
-      scrollbar-width: none;
     }
 
     .deckAreaWrapper::-webkit-scrollbar {
@@ -233,6 +255,10 @@ export class DMDeck extends LitElement {
       display: flex;
       justify-content: center;
       line-height: 0;
+    }
+
+    .cardImage {
+      width: 100%;
     }
 
     .dorumageWrapper,

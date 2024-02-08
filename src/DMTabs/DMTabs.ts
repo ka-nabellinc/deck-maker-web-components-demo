@@ -11,13 +11,13 @@ export class DMTabs extends LitElement {
   currentTab: string = "main";
 
   @property({ type: Number })
-  mainCardsLengh: number = 0;
+  mainCardsLength: number = 0;
 
   @property({ type: Number })
-  grCardsLengh: number = 0;
+  grCardsLength: number = 0;
 
   @property({ type: Number })
-  hyperSpatialCardsLengh: number = 0;
+  hyperSpatialCardsLength: number = 0;
 
   @property({ type: Boolean })
   hasDorumagedon: boolean = false;
@@ -43,14 +43,14 @@ export class DMTabs extends LitElement {
           @click="${this.changeTab}"
           data-tab="main"
         >
-          メイン ${this.mainCardsLengh}
+          メイン ${this.mainCardsLength}
         </div>
         <div
           class="tab ${this.currentTab === "gr" ? "active" : undefined}"
           @click="${this.changeTab}"
           data-tab="gr"
         >
-          GR ${this.grCardsLengh}
+          GR ${this.grCardsLength}
         </div>
         <div
           class="tab ${this.currentTab === "hyperSpatial"
@@ -59,7 +59,7 @@ export class DMTabs extends LitElement {
           @click="${this.changeTab}"
           data-tab="hyperSpatial"
         >
-          超次元 ${this.hyperSpatialCardsLengh}
+          超次元 ${this.hyperSpatialCardsLength}
         </div>
         ${this.hasDorumagedon
           ? html`

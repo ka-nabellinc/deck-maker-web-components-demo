@@ -49,6 +49,42 @@ export class DMDeckController implements ReactiveController {
     }
   }
 
+  get mainCards() {
+    return this.dmDeckData?.main_cards || []
+  }
+
+  get grCards() {
+    return this.dmDeckData?.gr_cards || []
+  }
+
+  get hyperSpatialCards() {
+    return this.dmDeckData?.hyper_spatial_cards || []
+  }
+
+  get mainCardsLength() {
+    return this.mainCards.length
+  }
+
+  get grCardsLength() {
+    return this.grCards.length
+  }
+
+  get hyperSpatialCardsLength() {
+    return this.dmDeckData?.hyper_spatial_cards.length || 0
+  }
+
+  get hasDorumagedon() {
+    return !!this.dmDeckData?.dorumagedon
+  }
+
+  get hasZeron() {
+    return !!this.dmDeckData?.zeron
+  }
+
+  get views() {
+    return this.dmDeckData?.views || 0
+  }
+
   // get updatedAtStr() {
   //   if (!this.ygDeckData) return ''
   //   const _updatedAt = new Date(this.ygDeckData.updated_at)
