@@ -43,14 +43,14 @@ export class DMTabs extends LitElement {
           @click="${this.changeTab}"
           data-tab="main"
         >
-          メイン${this.mainCardsLengh}
+          メイン ${this.mainCardsLengh}
         </div>
         <div
           class="tab ${this.currentTab === "gr" ? "active" : undefined}"
           @click="${this.changeTab}"
           data-tab="gr"
         >
-          GR${this.grCardsLengh}
+          GR ${this.grCardsLengh}
         </div>
         <div
           class="tab ${this.currentTab === "hyperSpatial"
@@ -59,7 +59,7 @@ export class DMTabs extends LitElement {
           @click="${this.changeTab}"
           data-tab="hyperSpatial"
         >
-          超次元${this.hyperSpatialCardsLengh}
+          超次元 ${this.hyperSpatialCardsLengh}
         </div>
         ${this.hasDorumagedon
           ? html`
