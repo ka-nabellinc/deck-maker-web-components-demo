@@ -31,3 +31,9 @@ export const Dorumagedon: Story = {
     dmDeckId: '20eb626b-bab0-47bb-8379-fde4373217a6'
   }
 }
+
+export const Zeron: Story = {
+  args: {
+    dmDeckId: '6463d214-c002-45ac-99a4-a685bd4d7955'
+  }
+}
