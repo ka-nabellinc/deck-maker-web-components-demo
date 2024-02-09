@@ -22,7 +22,7 @@ type Story = StoryObj<Params>;
 
 export const Default: Story = {
   args: {
-    dmDeckId: 'bf26ed18-665c-46aa-bd8e-8337e47696b'
+    dmDeckId: '7d3c6dd0-163c-438e-937c-de742098d9c2'
   }
 };
 
