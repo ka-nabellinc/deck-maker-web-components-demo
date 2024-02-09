@@ -105,7 +105,7 @@ export class DMDeckController implements ReactiveController {
       if (!response.ok) {
         throw new Error('Network error')
       }
-      const json = await response.json() as { dmDeck: DMDeckData}
+      const json = await response.json() as { dmDeck: DMDeckData }
       console.log(json)
       this.dmDeckData = json.dmDeck
     } catch (e) {

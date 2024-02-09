@@ -42,6 +42,7 @@ export class DMTabs extends LitElement {
           class="tab ${this.currentTab === "main" ? "active" : undefined}"
           @click="${this.changeTab}"
           data-tab="main"
+          data-testid="main-tab"
         >
           メイン ${this.mainCardsLength}
         </div>
@@ -49,6 +50,7 @@ export class DMTabs extends LitElement {
           class="tab ${this.currentTab === "gr" ? "active" : undefined}"
           @click="${this.changeTab}"
           data-tab="gr"
+          data-testid="gr-tab"
         >
           GR ${this.grCardsLength}
         </div>
@@ -58,6 +60,7 @@ export class DMTabs extends LitElement {
             : undefined}"
           @click="${this.changeTab}"
           data-tab="hyperSpatial"
+          data-testid="hyperSpatial-tab"
         >
           超次元 ${this.hyperSpatialCardsLength}
         </div>
@@ -69,6 +72,7 @@ export class DMTabs extends LitElement {
                   : undefined}"
                 @click="${this.changeTab}"
                 data-tab="dorumagedon"
+                data-testid="dorumagedon-tab"
                 style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"
               >
                 ドルマゲドン
@@ -83,6 +87,7 @@ export class DMTabs extends LitElement {
                   : undefined}"
                 @click="${this.changeTab}"
                 data-tab="zeron"
+                data-testid="zeron-tab"
               >
                 零龍
               </div>

@@ -1,8 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/web-components";
 import { action } from "@storybook/addon-actions";
+import { expect } from '@storybook/jest'
 import { html } from "lit";
 import type { Tab } from './DMTabs'
 import "./DMTabs"
+import { withinShadowRoot } from '../test-helpers'
 
 interface Params {
   currentTab: Tab;
@@ -61,18 +63,42 @@ export const Main: Story = {
   args: {
     currentTab: "main",
   },
+  play: async ({ canvasElement }) => {
+    const root = await withinShadowRoot(canvasElement, 'dm-tabs')
+
+    await expect(root.getByTestId('main-tab')).toBeInTheDocument()
+    await expect(root.getByTestId('main-tab')).toHaveClass('active')
+    await expect(root.getByTestId('gr-tab')).toBeInTheDocument()
+    await expect(root.getByTestId('hyperSpatial-tab')).toBeInTheDocument()
+  }
 };
 
 export const GR: Story = {
   args: {
     currentTab: "gr",
   },
+  play: async ({ canvasElement }) => {
+    const root = await withinShadowRoot(canvasElement, 'dm-tabs')
+
+    await expect(root.getByTestId('main-tab')).toBeInTheDocument()
+    await expect(root.getByTestId('gr-tab')).toBeInTheDocument()
+    await expect(root.getByTestId('gr-tab')).toHaveClass('active')
+    await expect(root.getByTestId('hyperSpatial-tab')).toBeInTheDocument()
+  }
 };
 
 export const HyperSpatial: Story = {
   args: {
     currentTab: 'hyperSpatial',
   },
+  play: async ({ canvasElement }) => {
+    const root = await withinShadowRoot(canvasElement, 'dm-tabs')
+
+    await expect(root.getByTestId('main-tab')).toBeInTheDocument()
+    await expect(root.getByTestId('gr-tab')).toBeInTheDocument()
+    await expect(root.getByTestId('hyperSpatial-tab')).toBeInTheDocument()
+    await expect(root.getByTestId('hyperSpatial-tab')).toHaveClass('active')
+  }
 };
 
 export const Dorumagedon: Story = {

@@ -3,7 +3,7 @@ import { customElement, property } from "lit/decorators.js";
 import { styleBase } from "./styles";
 import closeSvg from "../static/svg/close.svg";
 
-@customElement("dk-modal")
+@customElement("my-modal")
 export class Modal extends LitElement {
   @property({ type: Boolean })
   showModal: boolean = false;
@@ -16,7 +16,7 @@ export class Modal extends LitElement {
 
   render() {
     return html`
-      <div class="modal">
+      <div class="modal ${this.showModal ? 'show' : 'hide'}">
         <div class="modalBg" @click="${this.hide}"></div>
         <div class="modalWrapper">
           <div class="modalContents">

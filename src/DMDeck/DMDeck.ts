@@ -1,13 +1,12 @@
 import { LitElement, css, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { DMDeckController } from "../dmDeckController";
-import { getDMCardThumbnailUrl } from "../helpers";
+import "../DMDeckInfo"
 import "../DMTabs";
 import "../DMDeckArea";
 import { Tab } from "../DMTabs";
 import dorumagedon from "../static/images/dm/l/dorumagedon.jpg";
 import zeron from "../static/images/dm/l/zeron.jpg";
-import viewsSvg from "../static/svg/views.svg";
 
 @customElement("dm-deck")
 export class DMDeck extends LitElement {
@@ -40,7 +39,9 @@ export class DMDeck extends LitElement {
 
   showCardDetailModal(cardImg: string | null) {
     const _this = this;
+    console.log(cardImg)
     return function (e: Event) {
+      console.log(e)
       // if (cardImg === dorumagedon_l || cardImg === zeron_l || cardImg === dorumagedon_secret_l || cardImg === zeron_secret_l || cardImg === dorumagedon_BD21_l || cardImg === zeron_BD22_l) {
       //   _this.cardDetailImg = cardImg!
       // } else {
@@ -61,26 +62,7 @@ export class DMDeck extends LitElement {
         ${this.deckController?.dmDeckData
           ? html`
               <div class="deckRecipe">
-                <div class="head">
-                  <div
-                    class="thumbnail"
-                    style="background-image: url(${getDMCardThumbnailUrl(
-                      this.deckController.dmDeckData.thumbnail_url
-                    )})"
-                  ></div>
-                  <div class="deckInfo">
-                    <div class="deckInfoHead">
-                      <div class="regulation">
-                        ${this.deckController.regulationStr}
-                      </div>
-                    </div>
-                    <div class="deckInfoBody">
-                      <div class="name">
-                        ${this.deckController.dmDeckData.name}
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <dm-deck-info .deckData=${this.deckController.dmDeckData}></dm-deck-info>
 
                 <dm-tabs
                   currentTab=${this.currentTab}
@@ -142,11 +124,6 @@ export class DMDeck extends LitElement {
                       `
                     : null}
                 </div>
-
-                <div class="views">
-                  <img class="viewsIcon" src=${viewsSvg} />
-                  <div>${this.deckController.views}</div>
-                </div>
               </div>
             `
           : html`
@@ -181,67 +158,6 @@ export class DMDeck extends LitElement {
       padding: 16px;
     }
 
-    .head {
-      width: 100%;
-      display: flex;
-      border-bottom: 1px solid #e6e6eb;
-      padding-bottom: 8px;
-      margin-bottom: 12px;
-    }
-
-    .thumbnail {
-      width: calc(100px / 90 * 130);
-      height: 70px;
-      background-size: 150%;
-      background-position: left -30px top -45px;
-      margin-right: 16px;
-    }
-
-    .deckInfo {
-      width: 100%;
-    }
-
-    .deckInfoHead {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-    }
-
-    .regulation {
-      padding: 4px;
-      font-size: 11px;
-      line-height: 1;
-      width: fit-content;
-      color: #fff;
-      background-color: #818181;
-      border-radius: 0.25rem;
-      font-weight: 700;
-      margin-bottom: 16px;
-      height: 19px;
-    }
-
-    .views {
-      display: flex;
-      align-items: center;
-      color: #6c757d;
-      font-size: 12px;
-    }
-
-    .personIcon {
-      margin-right: 4px;
-    }
-
-    .updatedAt {
-      font-size: 11px;
-      color: #6c757d;
-    }
-
-    .deckInfoBody {
-      font-size: 14px;
-      line-height: 1;
-      text-overflow: ellipsis;
-    }
-
     .deckAreaWrapper {
       margin: 8px 0px;
     }
@@ -265,20 +181,6 @@ export class DMDeck extends LitElement {
     .zeronWrapper {
       width: 60%;
       cursor: pointer;
-    }
-
-    .views {
-      line-height: 1;
-      border-bottom: 1px solid #e6e6eb;
-      padding-bottom: 8px;
-      margin-bottom: 16px;
-    }
-
-    .viewsIcon {
-      width: 11px;
-      height: 11px;
-      margin-right: 4px;
-      margin-top: 2px;
     }
 
     .buttons {

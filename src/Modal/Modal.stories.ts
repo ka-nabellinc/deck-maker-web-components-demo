@@ -4,18 +4,20 @@ import { html } from "lit";
 import "./Modal";
 
 const template = () => html`
-  <dk-modal showModal @hide=${action('hide')}>
+  <my-modal showModal @hide=${action('hide')}>
     <img
       src="https://storage.googleapis.com/ka-nabell-card-images/img/card/card100275315_1.jpg"
     />
-  </dk-modal>
+  </my-modal>
 `;
 
 const meta = {
-  title: "dk-modal",
+  title: "my-modal",
   tags: ["autodocs"],
   render: template,
-  argTypes: {},
+  argTypes: {
+    showModal: { control: { type: Boolean } }
+  },
 } satisfies Meta<{}>;
 
 export default meta;

@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build --assetsInlineLimit 3000000",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
+    "test-storybook": "test-storybook",
     "test:unit": "jest -c jest.config.js"
   },
   "dependencies": {
@@ -16,8 +17,12 @@
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.6.13",
+    "@storybook/addon-interactions": "^7.6.13",
     "@storybook/addon-links": "^7.6.13",
     "@storybook/blocks": "^7.6.13",
+    "@storybook/jest": "^0.2.3",
+    "@storybook/test-runner": "^0.16.0",
+    "@storybook/testing-library": "^0.2.2",
     "@storybook/web-components": "^7.6.13",
     "@storybook/web-components-vite": "^7.6.13",
     "@types/jest": "^29.5.12",
