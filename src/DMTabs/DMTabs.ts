@@ -15,23 +15,74 @@ export class DMTabs extends LitElement {
 
   static styles = [styleBase];
 
+  changeTab(e: Event) {
+    const target = e.target as HTMLElement;
+    const tab = target.dataset["tab"] as Tab;
+
+    if (this.currentTab === tab) return;
+    const event = new CustomEvent("change", { detail: tab });
+    this.dispatchEvent(event);
+  }
+
   render() {
     return html`
       <div class="tabs">
-        <div class="tab" data-tab="main" data-testid="main-tab">メイン</div>
-        <div class="tab" data-tab="gr" data-testid="gr-tab">GR</div>
-        <div class="tab" data-tab="hyperSpatial" data-testid="hyperSpatial-tab">
-          超次元
+        <div
+          class="tab ${this.currentTab === "main" ? "active" : undefined}"
+          data-tab="main"
+          data-testid="main-tab"
+          @click=${this.changeTab}
+        >
+          メイン ${this.deckData?.main_cards.length}
         </div>
         <div
-          class="tab"
-          data-tab="dorumagedon"
-          data-testid="dorumagedon-tab"
-          style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"
+          class="tab ${this.currentTab === "gr" ? "active" : undefined}"
+          data-tab="gr"
+          data-testid="gr-tab"
+          @click=${this.changeTab}
         >
-          ドルマゲドン
+          GR ${this.deckData?.gr_cards.length}
         </div>
-        <div class="tab" data-tab="zeron" data-testid="zeron-tab">零龍</div>
+        <div
+          class="tab ${this.currentTab === "hyperSpatial"
+            ? "active"
+            : undefined}"
+          data-tab="hyperSpatial"
+          data-testid="hyperSpatial-tab"
+          @click=${this.changeTab}
+        >
+          超次元 ${this.deckData?.hyper_spatial_cards.length}
+        </div>
+
+        ${!this.deckData?.dorumagedon
+          ? null
+          : html`
+              <div
+                class="tab ${this.currentTab === "dorumagedon"
+                  ? "active"
+                  : undefined}"
+                data-tab="dorumagedon"
+                data-testid="dorumagedon-tab"
+                @click=${this.changeTab}
+                style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"
+              >
+                ドルマゲドン
+              </div>
+            `}
+        ${!this.deckData?.zeron
+          ? null
+          : html`
+              <div
+                class="tab ${this.currentTab === "zeron"
+                  ? "active"
+                  : undefined}"
+                data-tab="zeron"
+                data-testid="zeron-tab"
+                @click=${this.changeTab}
+              >
+                零龍
+              </div>
+            `}
       </div>
     `;
   }
