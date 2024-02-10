@@ -1,36 +1,3 @@
-export interface YGDeckData {
-  yg_deck_id: string;
-  uid: string;
-  author_display_name: string | null;
-  likes: number;
-  name: string;
-  thumbnail_url: string | null;
-  regulation_type: "limit" | "masterDuel" | "none" | null;
-  yg_deck_type_id: string; // FIXME DEMOでは名前も返す
-  legend: boolean;
-  main_sort_mode: "byLevelDesc" | "byLevelAsc" | "byNum" | "byManual"; // FIXME DEMOでは並べ替え不要？
-  extra_sort_mode: "byLevelDesc" | "byLevelAsc" | "byNum" | "byManual";
-  side_sort_mode: "byLevelDesc" | "byLevelAsc" | "byNum" | "byManual";
-  main_cards: {
-    main_card_id: number;
-    thumbnail_url: string | null;
-    large_image_url: string | null;
-  }[];
-  extra_cards: {
-    main_card_id: number;
-    thumbnail_url: string | null;
-    large_image_url: string | null;
-  }[];
-  side_cards: {
-    main_card_id: number;
-    thumbnail_url: string | null;
-    large_image_url: string | null;
-  }[];
-  created_at: number;
-  updated_at: number;
-  views: number;
-}
-
 export interface DMCardData {
   main_card_id: number;
   thumbnail_url: string | null;

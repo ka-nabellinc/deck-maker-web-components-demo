@@ -1,7 +1,7 @@
 import { LitElement, css, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { DMDeckController } from "../dmDeckController";
-import "../DMDeckInfo"
+import "../DMDeckInfo";
 import "../DMTabs";
 import "../DMDeckArea";
 import { Tab } from "../DMTabs";
@@ -37,24 +37,6 @@ export class DMDeck extends LitElement {
     this.currentTab = e.detail;
   }
 
-  showCardDetailModal(cardImg: string | null) {
-    const _this = this;
-    console.log(cardImg)
-    return function (e: Event) {
-      console.log(e)
-      // if (cardImg === dorumagedon_l || cardImg === zeron_l || cardImg === dorumagedon_secret_l || cardImg === zeron_secret_l || cardImg === dorumagedon_BD21_l || cardImg === zeron_BD22_l) {
-      //   _this.cardDetailImg = cardImg!
-      // } else {
-      //   _this.cardDetailImg = getDMCardThumbnailUrl(cardImg);
-      // }
-      if (!_this.shadowRoot) return;
-      const element = _this.shadowRoot.getElementById("cardDetailModalArea");
-      if (!element) return;
-      element.classList.toggle("show");
-      element.classList.toggle("hide");
-    };
-  }
-
   render() {
     console.log("rendering");
     return html`
@@ -62,51 +44,38 @@ export class DMDeck extends LitElement {
         ${this.deckController?.dmDeckData
           ? html`
               <div class="deckRecipe">
-                <dm-deck-info .deckData=${this.deckController.dmDeckData}></dm-deck-info>
+                <dm-deck-info
+                  .deckData=${this.deckController.dmDeckData}
+                ></dm-deck-info>
 
                 <dm-tabs
                   currentTab=${this.currentTab}
-                  mainCardsLength=${this.deckController.mainCardsLength}
-                  grCardsLength=${this.deckController.grCardsLength}
-                  hyperSpatialCardsLength=${this.deckController
-                    .hyperSpatialCardsLength}
-                  ?hasDorumagedon=${this.deckController.hasDorumagedon}
-                  ?hasZeron=${this.deckController.hasZeron}
+                  .deckData=${this.deckController.dmDeckData}
                   @change=${this.changeTab}
                 ></dm-tabs>
 
                 <div class="deckAreaWrapper">
                   ${this.currentTab === "main"
                     ? html`
-                        <dm-deck-area
-                          .cards=${this.deckController.mainCards}
-                          @selectImage=${this.showCardDetailModal}
-                        >
+                        <dm-deck-area .cards=${this.deckController.mainCards}>
                         </dm-deck-area>
                       `
                     : this.currentTab === "gr"
                     ? html`
-                        <dm-deck-area
-                          .cards=${this.deckController.grCards}
-                          @selectImage=${this.showCardDetailModal}
-                        >
+                        <dm-deck-area .cards=${this.deckController.grCards}>
                         </dm-deck-area>
                       `
                     : this.currentTab === "hyperSpatial"
                     ? html`
                         <dm-deck-area
                           .cards=${this.deckController.hyperSpatialCards}
-                          @selectImage=${this.showCardDetailModal}
                         >
                         </dm-deck-area>
                       `
                     : this.currentTab === "dorumagedon"
                     ? html`
                         <div class="dorumageArea">
-                          <div
-                            class="dorumageWrapper"
-                            @click="${this.showCardDetailModal(dorumagedon)}"
-                          >
+                          <div class="dorumageWrapper">
                             <img src="${dorumagedon}" class="cardImage" />
                           </div>
                         </div>
@@ -114,10 +83,7 @@ export class DMDeck extends LitElement {
                     : this.currentTab === "zeron"
                     ? html`
                         <div class="zeronArea">
-                          <div
-                            class="zeronWrapper"
-                            @click="${this.showCardDetailModal(zeron)}"
-                          >
+                          <div class="zeronWrapper">
                             <img src="${zeron}" class="cardImage" />
                           </div>
                         </div>
