@@ -50,12 +50,7 @@ export class DMDeck extends LitElement {
 
                 <dm-tabs
                   currentTab=${this.currentTab}
-                  mainCardsLength=${this.deckController.mainCardsLength}
-                  grCardsLength=${this.deckController.grCardsLength}
-                  hyperSpatialCardsLength=${this.deckController
-                    .hyperSpatialCardsLength}
-                  ?hasDorumagedon=${this.deckController.hasDorumagedon}
-                  ?hasZeron=${this.deckController.hasZeron}
+                  .deckData=${this.deckController.dmDeckData}
                   @change=${this.changeTab}
                 ></dm-tabs>
 

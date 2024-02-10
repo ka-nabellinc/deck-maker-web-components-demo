@@ -2,6 +2,7 @@ import { LitElement, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import "../loading";
 import { styleBase } from "./styles";
+import type { DMDeckData } from "../types";
 
 export type Tab = "main" | "gr" | "hyperSpatial" | "dorumagedon" | "zeron";
 
@@ -9,6 +10,9 @@ export type Tab = "main" | "gr" | "hyperSpatial" | "dorumagedon" | "zeron";
 export class DMTabs extends LitElement {
   @property({ type: String })
   currentTab: string = "main";
+
+  @property({ type: Object })
+  deckData: DMDeckData | null = null;
 
   @property({ type: Number })
   mainCardsLength: number = 0;
@@ -44,7 +48,7 @@ export class DMTabs extends LitElement {
           data-tab="main"
           data-testid="main-tab"
         >
-          メイン ${this.mainCardsLength}
+          メイン ${this.deckData?.main_cards.length || 0}
         </div>
         <div
           class="tab ${this.currentTab === "gr" ? "active" : undefined}"
@@ -52,7 +56,7 @@ export class DMTabs extends LitElement {
           data-tab="gr"
           data-testid="gr-tab"
         >
-          GR ${this.grCardsLength}
+          GR ${this.deckData?.gr_cards.length || 0}
         </div>
         <div
           class="tab ${this.currentTab === "hyperSpatial"
@@ -62,9 +66,9 @@ export class DMTabs extends LitElement {
           data-tab="hyperSpatial"
           data-testid="hyperSpatial-tab"
         >
-          超次元 ${this.hyperSpatialCardsLength}
+          超次元 ${this.deckData?.hyper_spatial_cards.length || 0}
         </div>
-        ${this.hasDorumagedon
+        ${this.deckData?.dorumagedon
           ? html`
               <div
                 class="tab ${this.currentTab === "dorumagedon"
@@ -79,7 +83,7 @@ export class DMTabs extends LitElement {
               </div>
             `
           : null}
-        ${this.hasZeron
+        ${this.deckData?.zeron
           ? html`
               <div
                 class="tab ${this.currentTab === "zeron"
