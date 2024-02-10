@@ -22,14 +22,9 @@ export class DMDeckController implements ReactiveController {
   }
 
   set dmDeckData(value: DMDeckData | undefined) {
-    this._dmDeckData = value
-    // 更新されたらホストコンポーネントに再描画をリクエスト
-    this.host.requestUpdate()
+    this._dmDeckData = value 
+    this.host.requestUpdate() // 更新されたらホストコンポーネントに再描画をリクエスト
   }
-
-  // get thumbnailUrl() {
-  //   return `https://storage.googleapis.com/ka-nabell-card-images/img/card/${this.ygDeckData?.thumbnail_url}`
-  // }
 
   get regulationStr() {
     if (!this.dmDeckData) return ''
@@ -80,20 +75,6 @@ export class DMDeckController implements ReactiveController {
   get hasZeron() {
     return !!this.dmDeckData?.zeron
   }
-
-  get views() {
-    return this.dmDeckData?.views || 0
-  }
-
-  // get updatedAtStr() {
-  //   if (!this.ygDeckData) return ''
-  //   const _updatedAt = new Date(this.ygDeckData.updated_at)
-  //   const year = _updatedAt.getFullYear()
-  //   const month = _updatedAt.getMonth() + 1
-  //   const date = _updatedAt.getDate()
-
-  //   return `${year}/${month}/${date}`
-  // }
 
   async fetchDeckData() {
     try {
